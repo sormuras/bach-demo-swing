@@ -13,13 +13,7 @@ class Main implements Runnable {
 
   @Override
   public void run() {
-    var frame = new JFrame("bach-demo-swing");
-    frame.setSize(640, 480);
-    frame.setResizable(false);
-    frame.setLocationRelativeTo(null);
-    frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+    var frame = new DemoFrame();
     frame.setVisible(true);
-    frame.setFocusable(true);
-    frame.setAutoRequestFocus(true);
   }
 }
