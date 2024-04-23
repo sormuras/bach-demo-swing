@@ -2,43 +2,56 @@ import java.lang.module.ModuleDescriptor;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-import run.bach.*;
-import run.bach.external.*;
-import run.bach.workflow.*;
-import run.bach.workflow.Structure.*;
+import java.util.Set;
+import run.bach.Bach;
+import run.bach.ToolCall;
+import run.bach.ToolRunner;
+import run.bach.external.GoogleJavaFormat;
+import run.bach.workflow.Builder;
+import run.bach.workflow.Launcher;
+import run.bach.workflow.Structure;
+import run.bach.workflow.Workflow;
 
-public record Project(Workflow workflow) implements Builder, Launcher, Printer, Tester {
+public record Project(Workflow workflow) implements Builder, Launcher {
   public static Project ofCurrentWorkingDirectory() {
     var folders = Bach.Folders.ofCurrentWorkingDirectory();
 
     var structure =
         new Structure(
-            new Basics("bach-demo-swing", "99"),
-            new Spaces(
-                new Space(
-                    "main",
-                    0,
-                    "demo/demo.Main",
-                    new DeclaredModule(Path.of("demo"), Path.of("demo/main/module-info.java"))),
-                new Space(
+            new Structure.Basics("bach-demo-swing", "99"),
+            new Structure.Spaces(
+                new Structure.Space(
+                        "main",
+                        0,
+                        "demo=demo/demo.Main",
+                        new Structure.DeclaredModule(
+                            Path.of("demo"), Path.of("demo/main/module-info.java")))
+                    .with(Structure.Space.Flag.IMAGE),
+                new Structure.Space(
                     "test",
                     List.of("main"),
                     0,
-                    List.of("demo/demo.AllTests"),
-                    new DeclaredModules(
-                        new DeclaredModule(
+                    List.of(Structure.Launcher.of("all-tests=demo/demo.AllTests")),
+                    new Structure.DeclaredModules(
+                        new Structure.DeclaredModule(
                             Path.of("demo"),
                             Path.of("demo/test/java-module/module-info.java"),
                             ModuleDescriptor.newModule("demo").build(),
-                            new DeclaredFolders(
+                            new Structure.DeclaredFolders(
                                 List.of(
                                     Path.of("demo/test/java"), Path.of("demo/test/java-module")),
                                 List.of()),
-                            Map.of())))));
+                            Map.of())),
+                    Set.of())));
 
     var runner = ToolRunner.ofSystem();
     var workflow = new Workflow(folders, structure, runner);
     return new Project(workflow);
+  }
+
+  @Override
+  public boolean builderShouldInvokeCleanBeforeCompile() {
+    return true;
   }
 
   public void format(String... args) {
