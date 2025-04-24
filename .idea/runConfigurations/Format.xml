@@ -1,9 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Format" type="Application" factoryName="Application" folderName="Project" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="Format" />
-    <module name="bach-demo-swing" />
-    <method v="2">
-      <option name="Make" enabled="true" />
-    </method>
-  </configuration>
-</component>

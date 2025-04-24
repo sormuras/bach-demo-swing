@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Launch" type="Application" factoryName="Application" folderName="Project" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="Launch" />
+  <configuration default="false" name="Start" type="Application" factoryName="Application" folderName="Project" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="Start" />
     <module name="bach-demo-swing" />
     <method v="2">
       <option name="Make" enabled="true" />
