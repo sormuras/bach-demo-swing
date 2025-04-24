@@ -22,7 +22,7 @@ public record Project(Workflow workflow) implements Builder, Launcher {
             new Structure.Spaces(
                 new Structure.Space(
                         "main",
-                        0,
+                        11,
                         "demo=demo/demo.Main",
                         new Structure.DeclaredModule(
                             Path.of("demo"), Path.of("demo/main/module-info.java")))
